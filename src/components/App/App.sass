@@ -1,0 +1,31 @@
+*
+    box-sizing: border-box
+
+.app 
+    display: flex
+    flex-direction: column
+    justify-content: center
+    align-items: center
+    // min-height: 700px
+    padding: 25px
+    // height: 100%
+    &_light
+        color: black;
+        background-color: white;
+    &_dark
+        color: burlywood;
+        background-color: rgba(59, 57, 57, 0.808);
+
+.title 
+    font-size: 32px
+    margin: 5px 0
+    grid-column-start: 1
+    grid-column-end: 3
+    align-self: center
+
+.gameContainer
+    display: flex
+    flex-wrap: wrap
+    justify-content: center
+    max-width: 910px
+    width: 100%
