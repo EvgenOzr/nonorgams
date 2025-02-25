@@ -1,5 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
-import nonoReducer from './NonoSlice'
+import nonoReducer from './nonoSlice'
 
 export const store = configureStore({
     reducer: nonoReducer

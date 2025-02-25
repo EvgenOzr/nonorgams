@@ -1,5 +1,5 @@
 // import React from 'react';
-import { useEffect, useRef, useState} from "react";
+import React, { useEffect, useRef, useState} from "react";
 import {useDispatch, useSelector } from "react-redux";
 import {start, setSolution, gameOverGame, removeSolution, resetGame, setSeconds} from '../App/nonoSlice'
 import './GameField.sass'
@@ -91,37 +91,44 @@ const GameField = () => {
     // }
 
     const updateTimer = () => {
-        let minutes: string = (Math.floor(timer/60) < 10) ? `0${Math.floor(timer/60)}` : `${Math.floor(timer/60)}`
-        let seconds: string = (timer%60 < 10) ? `0${timer%60}` : `${timer%60}`
+        const minutes: string = (Math.floor(timer/60) < 10) ? `0${Math.floor(timer/60)}` : `${Math.floor(timer/60)}`
+        const seconds: string = (timer%60 < 10) ? `0${timer%60}` : `${timer%60}`
         return `${minutes}:${seconds}`;
     }
 
-    const leftClickFieldHandle = (e) => {
+    const leftClickFieldHandle = (e: React.MouseEvent) => {
         if(!game && !gameOver) dispatch(start())
-        if(e.target.classList.contains('cell') && !gameOver){
-            if(e.target.classList.contains('cell_x')) e.target.classList.remove('cell_x')
-                if(!e.target.classList.contains('cell_black')){
-                    dispatch(setSolution(+e.target.id))
+        const target = e.target as HTMLElement
+        const id = +target.id
+        if(target.classList.contains('cell') && !gameOver){
+            if(target.classList.contains('cell_x')) target.classList.remove('cell_x')
+                if(!target.classList.contains('cell_black')){
+                    dispatch(setSolution(id))
                     // playSound('left')
                 } else {
-                    dispatch(removeSolution(+e.target.id))
+                    dispatch(removeSolution(id))
                 }
-                e.target.classList.toggle('cell_black')
+                target.classList.toggle('cell_black')
         }
     }
 
-    const rightClickFieldHandle = (e) => {
+    const rightClickFieldHandle = (e: React.MouseEvent) => {
         if(!game && !gameOver) dispatch(start())
         e.preventDefault()
-        if(e.target.classList.contains('cell') && !gameOver){
-            if(e.target.classList.contains('cell_black')){
-                dispatch(removeSolution(+e.target.id))
-                e.target.classList.remove('cell_black')
+        const target = e.target as HTMLElement
+        const id = +target.id
+        if(target.classList.contains('cell') && !gameOver){
+            if(target.classList.contains('cell_black')){
+                dispatch(removeSolution(id))
+                target.classList.remove('cell_black')
             }
-            e.target.classList.toggle('cell_x')
-            setXCell((state) => [...state, +e.target.id])
+            target.classList.toggle('cell_x')
+            setXCell((state) => [...state, id])
         }
     }
+
+
+
 
     return (
         <div className ='fieldWrapper'>
